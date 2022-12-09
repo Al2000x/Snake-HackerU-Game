@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "ShapeGame CSharp OOP Project/1.0.0": {
+        "runtime": {
+          "ShapeGame CSharp OOP Project.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "ShapeGame CSharp OOP Project/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

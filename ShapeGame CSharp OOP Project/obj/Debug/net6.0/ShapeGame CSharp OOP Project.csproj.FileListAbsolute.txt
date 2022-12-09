@@ -1,0 +1,15 @@
+C:\Users\Administrator-managr\source\repos\table Adder and deleter\ShapeGame CSharp OOP Project\ShapeGame CSharp OOP Project\bin\Debug\net6.0\ShapeGame CSharp OOP Project.exe
+C:\Users\Administrator-managr\source\repos\table Adder and deleter\ShapeGame CSharp OOP Project\ShapeGame CSharp OOP Project\bin\Debug\net6.0\ShapeGame CSharp OOP Project.deps.json
+C:\Users\Administrator-managr\source\repos\table Adder and deleter\ShapeGame CSharp OOP Project\ShapeGame CSharp OOP Project\bin\Debug\net6.0\ShapeGame CSharp OOP Project.runtimeconfig.json
+C:\Users\Administrator-managr\source\repos\table Adder and deleter\ShapeGame CSharp OOP Project\ShapeGame CSharp OOP Project\bin\Debug\net6.0\ShapeGame CSharp OOP Project.dll
+C:\Users\Administrator-managr\source\repos\table Adder and deleter\ShapeGame CSharp OOP Project\ShapeGame CSharp OOP Project\bin\Debug\net6.0\ShapeGame CSharp OOP Project.pdb
+C:\Users\Administrator-managr\source\repos\table Adder and deleter\ShapeGame CSharp OOP Project\ShapeGame CSharp OOP Project\obj\Debug\net6.0\ShapeGame CSharp OOP Project.csproj.AssemblyReference.cache
+C:\Users\Administrator-managr\source\repos\table Adder and deleter\ShapeGame CSharp OOP Project\ShapeGame CSharp OOP Project\obj\Debug\net6.0\ShapeGame CSharp OOP Project.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Administrator-managr\source\repos\table Adder and deleter\ShapeGame CSharp OOP Project\ShapeGame CSharp OOP Project\obj\Debug\net6.0\ShapeGame CSharp OOP Project.AssemblyInfoInputs.cache
+C:\Users\Administrator-managr\source\repos\table Adder and deleter\ShapeGame CSharp OOP Project\ShapeGame CSharp OOP Project\obj\Debug\net6.0\ShapeGame CSharp OOP Project.AssemblyInfo.cs
+C:\Users\Administrator-managr\source\repos\table Adder and deleter\ShapeGame CSharp OOP Project\ShapeGame CSharp OOP Project\obj\Debug\net6.0\ShapeGame CSharp OOP Project.csproj.CoreCompileInputs.cache
+C:\Users\Administrator-managr\source\repos\table Adder and deleter\ShapeGame CSharp OOP Project\ShapeGame CSharp OOP Project\obj\Debug\net6.0\ShapeGame CSharp OOP Project.dll
+C:\Users\Administrator-managr\source\repos\table Adder and deleter\ShapeGame CSharp OOP Project\ShapeGame CSharp OOP Project\obj\Debug\net6.0\refint\ShapeGame CSharp OOP Project.dll
+C:\Users\Administrator-managr\source\repos\table Adder and deleter\ShapeGame CSharp OOP Project\ShapeGame CSharp OOP Project\obj\Debug\net6.0\ShapeGame CSharp OOP Project.pdb
+C:\Users\Administrator-managr\source\repos\table Adder and deleter\ShapeGame CSharp OOP Project\ShapeGame CSharp OOP Project\obj\Debug\net6.0\ShapeGame CSharp OOP Project.genruntimeconfig.cache
+C:\Users\Administrator-managr\source\repos\table Adder and deleter\ShapeGame CSharp OOP Project\ShapeGame CSharp OOP Project\obj\Debug\net6.0\ref\ShapeGame CSharp OOP Project.dll
