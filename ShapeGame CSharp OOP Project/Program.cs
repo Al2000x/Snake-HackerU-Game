@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Xml;
 
@@ -9,11 +10,16 @@ namespace ShapeGame_CSharp_OOP_Project
     {
         static void Main(string[] args)
         {
+
             Random rnd = new Random();
-            int x, y;
+            int[] xArr = new int[80];
+            int[] yArr = new int[25];
+            int x, y, sCtr=1;
             bool failState = false;
             x = rnd.Next(0, 80);
             y = rnd.Next(0, 25);
+            xArr[x]=1;
+            yArr[y]=1;
             Snake head = new Head();
             Head head2 = (Head)head;
             head2.X = x;
@@ -21,13 +27,13 @@ namespace ShapeGame_CSharp_OOP_Project
             ConsoleDimensions();
             Console.SetCursorPosition(head2.X, head2.Y);
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine(head.SnakeHead);
-            BeginGame(failState,x,y);
-           
-           
-        }   
+            Console.Write(head.SnakeHead);
+            BeginGame(failState, x, y,xArr, sCtr);
+
+
+        }
         
-        static void BeginGame(bool failState, int x, int y)
+        static void BeginGame(bool failState, int x, int y,int[] xArr,int sCtr)
         {
             while (failState == false)
             {
@@ -39,15 +45,22 @@ namespace ShapeGame_CSharp_OOP_Project
                     case ConsoleKey.DownArrow:
                         break;
                     case ConsoleKey.RightArrow:
-                        MoveRight(ref x, ref y, ref failState);
+                        MoveRight(ref x, ref y, ref failState,ref xArr, ref sCtr);                       
                         FailStateCheck(failState);
                         break;
                     case ConsoleKey.LeftArrow:
                         break;
                 }
+                Console.SetCursorPosition(0, 0);
+                Console.Write(sCtr);
+                Console.SetCursorPosition(x, y);
+            }
+            foreach(int j in xArr)
+            {
+                Console.Write(j);
             }
         }
-        static void MoveRight(ref int x, ref int y,ref bool failState)
+        static void MoveRight(ref int x, ref int y, ref bool failState,ref int[]xArr,ref int sCtr)
         {
             if (x >= 79)
             {
@@ -56,11 +69,11 @@ namespace ShapeGame_CSharp_OOP_Project
             else
             {
                 x++;
+                sCtr++;
+                xArr[x] = 1;
                 Console.Write("*");
             }
             Console.ForegroundColor = ConsoleColor.White;
-            Console.SetCursorPosition(x, y);
-           
         }
         static void FailStateCheck(bool failState)
         {
