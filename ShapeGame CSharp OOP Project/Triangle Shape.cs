@@ -13,6 +13,6 @@ namespace ShapeGame_CSharp_OOP_Project
                                  "###" +
                                  "####" +
                                  "#####";
-
+        public int Size = 10;
     }
 }

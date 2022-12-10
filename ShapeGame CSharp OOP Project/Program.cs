@@ -28,12 +28,10 @@ namespace ShapeGame_CSharp_OOP_Project
             Console.SetCursorPosition(head2.X, head2.Y);
             Console.ForegroundColor = ConsoleColor.Red;
             Console.Write(head.SnakeHead);
-            BeginGame(failState, x, y,xArr, sCtr);
-
-
+            BeginGame(failState, x, y,xArr, yArr, sCtr);
         }
         
-        static void BeginGame(bool failState, int x, int y,int[] xArr,int sCtr)
+        static void BeginGame(bool failState, int x, int y,int[] xArr, int[] yArr, int sCtr)
         {
             while (failState == false)
             {
@@ -41,28 +39,32 @@ namespace ShapeGame_CSharp_OOP_Project
                 switch (key.Key)
                 {
                     case ConsoleKey.UpArrow:
+                        MoveUp(ref x, ref y, ref failState, ref xArr, ref yArr, ref sCtr);
+                        FailStateCheck(failState);
                         break;
                     case ConsoleKey.DownArrow:
+                        MoveDown(ref x, ref y, ref failState, ref xArr, ref yArr, ref sCtr);
+                        FailStateCheck(failState);
                         break;
                     case ConsoleKey.RightArrow:
-                        MoveRight(ref x, ref y, ref failState,ref xArr, ref sCtr);                       
+                        MoveRight(ref x, ref y, ref failState,ref xArr,ref yArr, ref sCtr);                       
                         FailStateCheck(failState);
                         break;
                     case ConsoleKey.LeftArrow:
+                        MoveLeft(ref x, ref y, ref failState, ref xArr, ref yArr, ref sCtr);
+                        FailStateCheck(failState);
                         break;
-                }
-                Console.SetCursorPosition(0, 0);
-                Console.Write(sCtr);
-                Console.SetCursorPosition(x, y);
+                }                                       
             }
             foreach(int j in xArr)
             {
                 Console.Write(j);
             }
         }
-        static void MoveRight(ref int x, ref int y, ref bool failState,ref int[]xArr,ref int sCtr)
+        static void MoveRight(ref int x, ref int y, ref bool failState,ref int[]xArr,ref int[] yArr, ref int sCtr)
         {
-            if (x >= 79)
+            Console.ForegroundColor = ConsoleColor.White;
+            if (x >= 79|| xArr[x + 1] == 1 && yArr[y] == 1)
             {
                 failState = true;
             }
@@ -71,6 +73,54 @@ namespace ShapeGame_CSharp_OOP_Project
                 x++;
                 sCtr++;
                 xArr[x] = 1;
+                Console.SetCursorPosition(x, y);
+                Console.Write("*");
+            }
+        }
+        static void MoveLeft(ref int x, ref int y, ref bool failState, ref int[] xArr, ref int[] yArr, ref int sCtr)
+        {
+            Console.ForegroundColor = ConsoleColor.White;
+            if (x <= 0 || xArr[x] + 1 == 1 && yArr[y] + 1 == 1)
+            {
+                failState = true;
+            }
+            else
+            {
+                x--;
+                sCtr++;
+                xArr[x] = 1;
+                Console.SetCursorPosition(x, y);
+                Console.Write("*");
+            }
+        }
+        static void MoveDown(ref int x, ref int y, ref bool failState, ref int[] xArr, ref int[] yArr, ref int sCtr)
+        {
+            Console.ForegroundColor = ConsoleColor.White;
+            if (y >= 25 || xArr[x] + 1 == 1 && yArr[y] + 1 == 1)
+            {
+                failState = true;
+            }
+            else
+            {
+                y++;
+                sCtr++;
+                xArr[y] = 1;
+                Console.SetCursorPosition(x, y);
+                Console.Write("*");
+            }
+        }
+        static void MoveUp(ref int x, ref int y, ref bool failState, ref int[] xArr, ref int[] yArr, ref int sCtr)
+        {
+            if (y <= 0 || xArr[x]+1 == 1 && yArr[y]+1 == 1)
+            {
+                failState = true;
+            }
+            else
+            {
+                y--;
+                sCtr++;
+                yArr[y] = 1;
+                Console.SetCursorPosition(x, y);
                 Console.Write("*");
             }
             Console.ForegroundColor = ConsoleColor.White;
