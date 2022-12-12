@@ -8,11 +8,8 @@ namespace ShapeGame_CSharp_OOP_Project
 {
     internal class Triangle_Shape
     {
-        public string Shape =    "#" +
-                                 "##" +
-                                 "###" +
-                                 "####" +
-                                 "#####";
-        public int Size = 10;
+        public string Shape;
+        public int Size=0;
     }
+    
 }

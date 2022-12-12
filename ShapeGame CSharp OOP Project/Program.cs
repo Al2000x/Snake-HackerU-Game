@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Xml;
 
+
 namespace ShapeGame_CSharp_OOP_Project
 {
     internal class Program
@@ -12,14 +13,13 @@ namespace ShapeGame_CSharp_OOP_Project
         {
 
             Random rnd = new Random();
-            int[] xArr = new int[80];
-            int[] yArr = new int[25];
+
+            int[,] boardGrid = new int[80, 25];
             int x, y, sCtr=1;
             bool failState = false;
             x = rnd.Next(0, 80);
             y = rnd.Next(0, 25);
-            xArr[x]=1;
-            yArr[y]=1;
+            boardGrid[x,y]=1;
             Snake head = new Head();
             Head head2 = (Head)head;
             head2.X = x;
@@ -28,10 +28,10 @@ namespace ShapeGame_CSharp_OOP_Project
             Console.SetCursorPosition(head2.X, head2.Y);
             Console.ForegroundColor = ConsoleColor.Red;
             Console.Write(head.SnakeHead);
-            BeginGame(failState, x, y,xArr, yArr, sCtr);
+            BeginGame(failState, x, y, boardGrid, sCtr);
         }
         
-        static void BeginGame(bool failState, int x, int y,int[] xArr, int[] yArr, int sCtr)
+        static void BeginGame(bool failState, int x, int y, int [,] boardGrid, int sCtr)
         {
             while (failState == false)
             {
@@ -39,87 +39,94 @@ namespace ShapeGame_CSharp_OOP_Project
                 switch (key.Key)
                 {
                     case ConsoleKey.UpArrow:
-                        MoveUp(ref x, ref y, ref failState, ref xArr, ref yArr, ref sCtr);
+                        y--;
+                        if (boardGrid[x, y] == 1)
+                        {
+                            y++;
+                            break;
+                        }
+                        MoveUp(ref x, ref y, ref failState, ref boardGrid, ref sCtr);
                         FailStateCheck(failState);
                         break;
+                       
                     case ConsoleKey.DownArrow:
-                        MoveDown(ref x, ref y, ref failState, ref xArr, ref yArr, ref sCtr);
+                       
+                        MoveDown(ref x, ref y, ref failState, ref boardGrid, ref sCtr);                    
                         FailStateCheck(failState);
                         break;
                     case ConsoleKey.RightArrow:
-                        MoveRight(ref x, ref y, ref failState,ref xArr,ref yArr, ref sCtr);                       
+                        MoveRight(ref x, ref y, ref failState, ref boardGrid, ref sCtr);                      
                         FailStateCheck(failState);
                         break;
                     case ConsoleKey.LeftArrow:
-                        MoveLeft(ref x, ref y, ref failState, ref xArr, ref yArr, ref sCtr);
+                        MoveLeft(ref x, ref y, ref failState, ref boardGrid, ref sCtr);
                         FailStateCheck(failState);
                         break;
                 }                                       
             }
-            foreach(int j in xArr)
-            {
-                Console.Write(j);
-            }
         }
-        static void MoveRight(ref int x, ref int y, ref bool failState,ref int[]xArr,ref int[] yArr, ref int sCtr)
+        static void MoveRight(ref int x, ref int y, ref bool failState, ref int[,] boardGrid, ref int sCtr)
         {
-            Console.ForegroundColor = ConsoleColor.White;
-            if (x >= 79|| xArr[x + 1] == 1 && yArr[y] == 1)
+            x++;
+            if (x >= 80 || boardGrid[x, y] == 1)
             {
                 failState = true;
             }
             else
             {
-                x++;
+
                 sCtr++;
-                xArr[x] = 1;
+                boardGrid[x, y] = 1;
                 Console.SetCursorPosition(x, y);
                 Console.Write("*");
             }
-        }
-        static void MoveLeft(ref int x, ref int y, ref bool failState, ref int[] xArr, ref int[] yArr, ref int sCtr)
-        {
             Console.ForegroundColor = ConsoleColor.White;
-            if (x <= 0 || xArr[x] + 1 == 1 && yArr[y] + 1 == 1)
+        }
+        static void MoveLeft(ref int x, ref int y, ref bool failState, ref int[,] boardGrid, ref int sCtr)
+        {
+            x--;
+            if (x <= 0|| boardGrid[x, y] == 1)
             {
                 failState = true;
             }
             else
             {
-                x--;
+                
                 sCtr++;
-                xArr[x] = 1;
+                boardGrid[x, y] = 1;
                 Console.SetCursorPosition(x, y);
                 Console.Write("*");
             }
-        }
-        static void MoveDown(ref int x, ref int y, ref bool failState, ref int[] xArr, ref int[] yArr, ref int sCtr)
-        {
             Console.ForegroundColor = ConsoleColor.White;
-            if (y >= 25 || xArr[x] + 1 == 1 && yArr[y] + 1 == 1)
+        }
+        static void MoveDown(ref int x, ref int y, ref bool failState, ref int[,] boardGrid, ref int sCtr)
+        {
+            y++;
+            if (y >= 25 || boardGrid[x, y] == 1)
             {
                 failState = true;
             }
             else
             {
-                y++;
+               
                 sCtr++;
-                xArr[y] = 1;
+                boardGrid[x, y] = 1;
                 Console.SetCursorPosition(x, y);
                 Console.Write("*");
             }
+            Console.ForegroundColor = ConsoleColor.White;
         }
-        static void MoveUp(ref int x, ref int y, ref bool failState, ref int[] xArr, ref int[] yArr, ref int sCtr)
+        static void MoveUp(ref int x, ref int y, ref bool failState, ref int[,] boardGrid, ref int sCtr)
         {
-            if (y <= 0 || xArr[x]+1 == 1 && yArr[y]+1 == 1)
+            if (y < 0 || boardGrid[x,y]==1)
             {
                 failState = true;
             }
             else
             {
-                y--;
+                
                 sCtr++;
-                yArr[y] = 1;
+                boardGrid[x,y] = 1;
                 Console.SetCursorPosition(x, y);
                 Console.Write("*");
             }
@@ -140,6 +147,6 @@ namespace ShapeGame_CSharp_OOP_Project
             Console.CursorVisible = false;
             Console.WindowWidth = 80;
             Console.WindowHeight = 25;
-        }
+        }        
     }
 }

@@ -9,6 +9,7 @@ namespace ShapeGame_CSharp_OOP_Project
     internal class Snake
     {
         static public int Length = 0;
+
         public string SnakeHead = "*";
     }
 }
