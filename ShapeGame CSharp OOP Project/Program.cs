@@ -9,7 +9,6 @@ namespace ShapeGame_CSharp_OOP_Project
 {
     internal class Program
     {
-        private static string neck;
 
         static void Main(string[] args)
         {
@@ -17,91 +16,73 @@ namespace ShapeGame_CSharp_OOP_Project
             Random rnd = new Random();
             bool startLevel = true;
             int[,] boardGrid = new int[80, 25];
-            int x, y, sCtr=1,fCounter = 0;
+            int sCtr = 1, fCounter = 0;
             string direction = "";
             bool failState = false;
-            x = rnd.Next(0, 80);
-            y = rnd.Next(0, 25);
-            boardGrid[x,y]=1;          
             ConsoleDimensions();
-            Console.SetCursorPosition(x, y);
-            Console.Write("*");
-            BeginGame(failState, x, y, boardGrid, sCtr,direction, startLevel);
-        }
-        
-        static void BeginGame(bool failState, int x, int y, int [,] boardGrid, int sCtr, string direction, bool startLevel)
-        {
-            while (failState == false)
-            {
-                if(startLevel == true)
-                {
 
+
+            BeginGame(failState, boardGrid, sCtr, direction, startLevel, rnd);
+        }
+
+        static void BeginGame(bool failState, int[,] boardGrid, int sCtr, string direction, bool startLevel, Random rnd)
+        {
+            int x = 0;
+            int y = 0;
+            while (true)
+            {
+
+                if (startLevel == true)
+                {
+                    boardGrid = new int[80, 25];
+
+                    x = rnd.Next(0, 80);
+                    y = rnd.Next(0, 25);
+                    Console.SetCursorPosition(x, y);
+                    Console.Write("*");
+                    boardGrid[x, y] = 1;
+                    direction = "";
+                    sCtr = 0;
                 }
+                startLevel = false;
                 var key = Console.ReadKey(true);
                 switch (key.Key)
                 {
                     case ConsoleKey.UpArrow:
-                      
-                        y--;
-                        if (y <= 0 || boardGrid[x, y] == 1 && direction == "down")
-                        {
-                            y++;
-                            break;
-                        }
-                        direction = "up"; 
-                        MoveUp(ref x, ref y, ref failState, ref boardGrid, ref sCtr,ref direction);
-                        FailStateCheck(failState);
-
+                        MoveUp(ref x, ref y, ref failState, ref boardGrid, ref sCtr, ref direction);
                         break;
-                       
+
                     case ConsoleKey.DownArrow:
-                        y++;
-                        if (y >= 25 || boardGrid[x, y] == 1 && direction == "up")
-                        {
-                            y--;
-                            break;
-                        }
-                        direction = "down";
-                        MoveDown(ref x, ref y, ref failState, ref boardGrid, ref sCtr, ref direction);                    
-                        FailStateCheck(failState);
+                        MoveDown(ref x, ref y, ref failState, ref boardGrid, ref sCtr, ref direction);
                         break;
                     case ConsoleKey.RightArrow:
-                        x++;
-                        if (x >= 80 || boardGrid[x, y] == 1 && direction == "left")
-                        {
-                            x--;
-                            break;
-                        }
-                        direction = "right";
-                        MoveRight(ref x, ref y, ref failState, ref boardGrid, ref sCtr, ref direction);                      
-                        FailStateCheck(failState);
+
+                        MoveRight(ref x, ref y, ref failState, ref boardGrid, ref sCtr, ref direction);
                         break;
                     case ConsoleKey.LeftArrow:
-                        x--;
-                        if ( x<=0 || boardGrid[x, y] == 1 && direction == "right")
-                        { 
-                            x++;
-                            break;
-                        }
-                        direction = "left";
                         MoveLeft(ref x, ref y, ref failState, ref boardGrid, ref sCtr, ref direction);
-                        FailStateCheck(failState);
                         break;
-                }                                       
+                }
+                FailStateCheck(ref failState, ref startLevel);
             }
-            Console.ReadLine();
         }
         static void MoveRight(ref int x, ref int y, ref bool failState, ref int[,] boardGrid, ref int sCtr, ref string direction)
         {
-      
+            x++;
+            if (x >= 80 || direction == "left")
+            {
+                x--;
+                return;
+            }
+            
             if (x >= 80 || boardGrid[x, y] == 1)
             {
                 failState = true;
             }
             else
             {
-                
-                sCtr++;                
+                direction = "right";
+                sCtr++;
                 boardGrid[x, y] = 1;
                 Console.SetCursorPosition(x, y);
                 Console.Write("*");
@@ -110,14 +91,20 @@ namespace ShapeGame_CSharp_OOP_Project
         }
         static void MoveLeft(ref int x, ref int y, ref bool failState, ref int[,] boardGrid, ref int sCtr, ref string direction)
         {
-            
-            if (x <= 0|| boardGrid[x, y] == 1)
+            x--;
+            if (x < 0 || direction == "right")
+            {
+                x++;
+                return;
+            }
+             
+            if (x < 0 || boardGrid[x, y] == 1)
             {
                 failState = true;
             }
             else
             {
-                
+                direction = "left";
                 sCtr++;
                 boardGrid[x, y] = 1;
                 Console.SetCursorPosition(x, y);
@@ -127,42 +114,60 @@ namespace ShapeGame_CSharp_OOP_Project
         }
         static void MoveDown(ref int x, ref int y, ref bool failState, ref int[,] boardGrid, ref int sCtr, ref string direction)
         {
-           
-            if (y >= 25 || boardGrid[x, y] == 1)
+            y++;
+            if (y >= 25 || direction == "up")
+            {
+                y--;
+                return;
+            }
+            
+            if (boardGrid[x, y] == 1)
             {
                 failState = true;
             }
             else
             {
-                
+                direction = "down";
                 sCtr++;
                 boardGrid[x, y] = 1;
                 Console.SetCursorPosition(x, y);
                 Console.Write("*");
             }
         }
-        static void MoveUp(ref int x, ref int y, ref bool failState, ref int[,] boardGrid, ref int sCtr ,ref string direction)
+        static void MoveUp(ref int x, ref int y, ref bool failState, ref int[,] boardGrid, ref int sCtr, ref string direction)
         {
-            if (y <= 0 || boardGrid[x,y]==1)
+
+            y--;
+            if (direction == "down" || y<=0)
+            {
+                y++;
+                return;
+            }
+            
+            if (boardGrid[x,y]==1)
             {
                 failState = true;
             }
             else
             {
-                
+                direction = "up";
                 sCtr++;
                 boardGrid[x,y] = 1;
                 Console.SetCursorPosition(x, y);
                 Console.Write("*");
             }
         }
-        static void FailStateCheck(bool failState)
+        static void FailStateCheck(ref bool failState,ref bool startLevel)
         {
             if (failState == true)
             {
                 Console.Clear();
                 Console.WriteLine("you colided with something :(");
-               
+                startLevel = true;
+                failState = false;
+                Console.WriteLine("to start the next round press any button on your keyboard");
+                Console.ReadLine();
+                Console.Clear();
             }
         }
         static void ConsoleDimensions()
