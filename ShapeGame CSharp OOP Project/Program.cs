@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics.Metrics;
 using System.Globalization;
+using System.Reflection.Metadata.Ecma335;
 using System.Runtime.InteropServices;
 using System.Xml;
 
@@ -12,20 +15,24 @@ namespace ShapeGame_CSharp_OOP_Project
 
         static void Main(string[] args)
         {
-
             Random rnd = new Random();
             bool startLevel = true;
+            int currentLevel = 1;
+            
             int[,] boardGrid = new int[80, 25];
-            int sCtr = 1, fCounter = 0;
+            //int[,] currShape = new int[]
+
+            int sCtr = 1, fCounter = 0,numOfShapes = 3;
             string direction = "";
             bool failState = false;
             ConsoleDimensions();
 
 
-            BeginGame(failState, boardGrid, sCtr, direction, startLevel, rnd);
+            BeginGame(failState, boardGrid, sCtr, direction, startLevel, fCounter, rnd,numOfShapes, /*shapes,*/currentLevel);
         }
 
-        static void BeginGame(bool failState, int[,] boardGrid, int sCtr, string direction, bool startLevel, Random rnd)
+        static void BeginGame(bool failState, int[,] boardGrid,  int sCtr, string direction, bool startLevel,
+            int fCounter, Random rnd,int numOfShapes/*, List<(int ,int)> shapes */, int currentLevel)
         {
             int x = 0;
             int y = 0;
@@ -34,8 +41,8 @@ namespace ShapeGame_CSharp_OOP_Project
 
                 if (startLevel == true)
                 {
+                    int shapeStarter = 1;
                     boardGrid = new int[80, 25];
-
                     x = rnd.Next(0, 80);
                     y = rnd.Next(0, 25);
                     Console.SetCursorPosition(x, y);
@@ -43,6 +50,23 @@ namespace ShapeGame_CSharp_OOP_Project
                     boardGrid[x, y] = 1;
                     direction = "";
                     sCtr = 0;
+                    while(shapeStarter!= numOfShapes)
+                    {
+                        int j = rnd.Next(0, 80);
+                        int k = rnd.Next(0, 25);
+                        if (boardGrid[j, k] == 0)
+                        {
+                        Console.SetCursorPosition(j, k);
+                        SelectShape(j,k/*,shapes*/);
+                        shapeStarter++;
+                        }
+
+                    }
+                    //shapes.Clear();
+                    for (int i = 0; i < currentLevel; i++)
+                    {
+                        //shapes.Add(1,2);
+                    }
                 }
                 startLevel = false;
                 var key = Console.ReadKey(true);
@@ -63,7 +87,7 @@ namespace ShapeGame_CSharp_OOP_Project
                         MoveLeft(ref x, ref y, ref failState, ref boardGrid, ref sCtr, ref direction);
                         break;
                 }
-                FailStateCheck(ref failState, ref startLevel);
+                FailStateCheck(ref failState, ref startLevel ,ref fCounter);
             }
         }
         static void MoveRight(ref int x, ref int y, ref bool failState, ref int[,] boardGrid, ref int sCtr, ref string direction)
@@ -138,7 +162,7 @@ namespace ShapeGame_CSharp_OOP_Project
         {
 
             y--;
-            if (direction == "down" || y<=0)
+            if (direction == "down" || y<0)
             {
                 y++;
                 return;
@@ -157,7 +181,7 @@ namespace ShapeGame_CSharp_OOP_Project
                 Console.Write("*");
             }
         }
-        static void FailStateCheck(ref bool failState,ref bool startLevel)
+        static void FailStateCheck(ref bool failState, ref bool startLevel, ref int fCounter)
         {
             if (failState == true)
             {
@@ -165,6 +189,7 @@ namespace ShapeGame_CSharp_OOP_Project
                 Console.WriteLine("you colided with something :(");
                 startLevel = true;
                 failState = false;
+                fCounter++;
                 Console.WriteLine("to start the next round press any button on your keyboard");
                 Console.ReadLine();
                 Console.Clear();
@@ -175,46 +200,79 @@ namespace ShapeGame_CSharp_OOP_Project
             Console.Clear();
             Console.CursorVisible = false;
             Console.WindowWidth = 80;
-            Console.WindowHeight = 25;
+            Console.WindowHeight = 28;
+            Console.SetCursorPosition(0, 25);
+            Console.WriteLine("≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡");
+       
         }
-        //static void Rectangle(int[] boardGrid, int x, int y)
-        //{
-        //    bool posFound = false;
-        //    int rNumX, rNumY;
-        //    Random rnd = new Random();
-        //    while (posFound == false)
-        //    {
-        //        rNumX = rnd.Next(0, 80);
-        //        rNumY = rnd.Next(0, 25);
-        //        if (boardGrid[rNumX, rNumY] == 0)
-        //        {
-        //            posFound = true;
-        //        }
-        //    }
-        //    Console.SetCursorPosition(rNumX, rNumY);
-        //    for (int i = 1; i <= rNum; i++)
-        //    {
-        //        rNumX++;
-        //        Console.SetCursorPosition(rNumX, rNumY);
-        //        for (int j = 1; j <= i; j++)
-        //        {
-        //            rNumY++;
-        //            Console.SetCursorPosition(rNumX, rNumY);
-        //            Console.Write("#");
-        //            boardGrid[rNumX, rNumY] == 1;
-        //        }
-        //        Console.WriteLine();
-        //    }
-        //}
-        //static void UpLine()
-        //{
-        //    Random random = new Random();
-        //    int rNum = random.Next(3, 6);
-        //    for (int i = 0; i < rNum; i++)
-        //    {
-        //        Console.WriteLine("║");
-        //    }
-        //}
+        static void CheckIfSpotIsFreeForShape(int[,] boardGrid)
+        {
+            bool valid = false;
+            while(valid = false)
+            {
+                
+            }
+        }
+        static void PrntSquare(int j, int k/*, List<(int, int)> shapes*/)
+        {
+            int tempj, tempk;
+            tempj = j;
+            tempk = k;
+            Random rnd = new Random();
+            int size = rnd.Next(3, 5);
+            for (int x = 0; x < size; x++)
+            {
+                tempj++;
+                for (int y = 0; y < size; y++)
+                {
+                    tempk++;
+                    Console.Write("#");
+                    //shapes.Add(tempj, tempk);
+
+                }
+                Console.WriteLine();
+            }
+        }
+        static void PrntTriangle()
+        {
+            Random rnd = new Random();
+            int size = rnd.Next(3, 5);
+            for (int i = 1; i <= size; i++)
+            {
+                for (int j = 1; j <= i; j++)
+                {
+                    Console.Write("#");
+
+                }
+                Console.WriteLine();
+            }
+        }
+        static void PrntLine()
+        {
+            Random rnd = new Random();
+            int size = rnd.Next(3, 5);
+            for (int i = 0; i < size; i++)
+            {
+                Console.Write("=");
+            }
+            Console.WriteLine();
+        }
+        static void SelectShape(int j, int k/*, List<(int , int )> shapes*/)
+        {
+            Random rnd = new Random();
+            int randNum = rnd.Next(0, 2);                     
+            switch (randNum)
+            {
+                case 0:
+                    PrntSquare(j, k/*, shapes*/);
+                    break;
+                case 1:
+                    PrntTriangle();
+                    break;
+                 case 2:
+                    PrntLine();
+                    break;
+            }
+        }
     }
-   
 }
