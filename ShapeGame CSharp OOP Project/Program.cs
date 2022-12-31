@@ -20,19 +20,19 @@ namespace ShapeGame_CSharp_OOP_Project
             int currentLevel = 1;
             
             int[,] boardGrid = new int[80, 25];
-            //int[,] currShape = new int[]
-
+            int[,] currShape = new int[80, 25];
+           
             int sCtr = 1, fCounter = 0,numOfShapes = 3;
             string direction = "";
             bool failState = false;
             ConsoleDimensions();
 
 
-            BeginGame(failState, boardGrid, sCtr, direction, startLevel, fCounter, rnd,numOfShapes, /*shapes,*/currentLevel);
+            BeginGame(failState, boardGrid, sCtr, direction, startLevel, fCounter, rnd,numOfShapes, currShape, currentLevel);
         }
 
         static void BeginGame(bool failState, int[,] boardGrid,  int sCtr, string direction, bool startLevel,
-            int fCounter, Random rnd,int numOfShapes/*, List<(int ,int)> shapes */, int currentLevel)
+            int fCounter, Random rnd,int numOfShapes,int[,] currShape , int currentLevel)
         {
             int x = 0;
             int y = 0;
@@ -57,7 +57,7 @@ namespace ShapeGame_CSharp_OOP_Project
                         if (boardGrid[j, k] == 0)
                         {
                         Console.SetCursorPosition(j, k);
-                        SelectShape(j,k/*,shapes*/);
+                        SelectShape(j, k, currShape, boardGrid);
                         shapeStarter++;
                         }
 
@@ -205,46 +205,67 @@ namespace ShapeGame_CSharp_OOP_Project
             Console.WriteLine("≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡");
        
         }
-        static void CheckIfSpotIsFreeForShape(int[,] boardGrid)
+        static void PrntSquare(int j, int k, int[,] currShape, int[,]boardGrid)
+        {
+            bool valid = false;
+            //while (valid == false)
+            //{
+                int tempj, tempk;
+                tempj = j;
+                tempk = k;
+                Random rnd = new Random();
+                int size = rnd.Next(3, 5);
+                for (int x = 0; x < size; x++)
+                {
+                    tempj++;
+                    for (int y = 0; y < size; y++)
+                    {
+                        tempk++;
+                    Console.Write("#");
+                        currShape[tempj, tempk] = 1;
+
+                    }
+                    Console.WriteLine();
+                }
+                foreach (int i in currShape)
+                {
+                    if(currShape[i, i+1] == boardGrid[i,i+1])
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        valid = true;
+                    }
+                    
+                    
+                }
+                if(valid == true)
+                {
+                    foreach(int i in currShape)
+                    {
+                       
+                    }
+                }
+
+            //}
+        }
+        static void PrntTriangle()
         {
             bool valid = false;
             while(valid = false)
             {
-                
-            }
-        }
-        static void PrntSquare(int j, int k/*, List<(int, int)> shapes*/)
-        {
-            int tempj, tempk;
-            tempj = j;
-            tempk = k;
-            Random rnd = new Random();
-            int size = rnd.Next(3, 5);
-            for (int x = 0; x < size; x++)
-            {
-                tempj++;
-                for (int y = 0; y < size; y++)
+                Random rnd = new Random();
+                int size = rnd.Next(3, 5);
+                for (int i = 1; i <= size; i++)
                 {
-                    tempk++;
-                    Console.Write("#");
-                    //shapes.Add(tempj, tempk);
+                    for (int j = 1; j <= i; j++)
+                    {
+                        Console.Write("#");
 
+                    }
+                    Console.WriteLine();
                 }
-                Console.WriteLine();
-            }
-        }
-        static void PrntTriangle()
-        {
-            Random rnd = new Random();
-            int size = rnd.Next(3, 5);
-            for (int i = 1; i <= size; i++)
-            {
-                for (int j = 1; j <= i; j++)
-                {
-                    Console.Write("#");
-
-                }
-                Console.WriteLine();
             }
         }
         static void PrntLine()
@@ -257,14 +278,14 @@ namespace ShapeGame_CSharp_OOP_Project
             }
             Console.WriteLine();
         }
-        static void SelectShape(int j, int k/*, List<(int , int )> shapes*/)
+        static void SelectShape(int j, int k, int[,] currShape,int[,] boardGrid)
         {
             Random rnd = new Random();
             int randNum = rnd.Next(0, 2);                     
             switch (randNum)
             {
                 case 0:
-                    PrntSquare(j, k/*, shapes*/);
+                    PrntSquare(j, k, currShape,boardGrid);
                     break;
                 case 1:
                     PrntTriangle();
